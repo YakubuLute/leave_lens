@@ -51,15 +51,10 @@ Leaf Lens is a Flutter app. You take or upload a photo of a leaf, and it tells y
 lib/
   main.dart
   app/
-    theme.dart                 # green palette, typography
+    app.dart                   # MaterialApp wired to LeafTheme
     router.dart                # go_router routes
-  features/
-    scan/
-      home_screen.dart         # "Take photo" / "Upload" buttons + recent scans
-      preview_screen.dart      # crop/confirm image, optional crop picker
-      result_screen.dart       # status badge, disease, confidence, treatment tabs
-    history/
-      history_screen.dart
+  design_system/               # tokens, theme, Leaf* components (see CLAUDE.md §2)
+  core/                        # errors, result types, config, utils
   domain/
     diagnosis.dart             # Diagnosis model (shared schema, see §3)
     diagnosis_service.dart     # abstract interface: Future<Diagnosis> diagnose(File)
@@ -69,6 +64,13 @@ lib/
     hybrid_diagnosis_service.dart # decision rule from §1
     treatment_repository.dart  # loads assets/data/treatments.json
     history_repository.dart    # local persistence
+  features/
+    scan/
+      presentation/            # home, preview, result screens
+      application/             # Riverpod providers / notifiers
+    history/
+      presentation/
+      application/
 assets/
   models/leaf_model.tflite
   models/labels.txt
@@ -166,7 +168,7 @@ On-device and cloud results look the same to the UI:
 
 | Phase | Deliverable | Done when |
 |---|---|---|
-| **0. Setup** | `git init`, folder structure, packages, theme, permissions | App builds on iOS + Android |
+| **0. Setup** | Folder structure, packages, **design system** (tokens, theme, core components, gallery), permissions | App builds on iOS + Android |
 | **1. UI with a stub** | Home → pick image → preview → result screen, backed by a `FakeDiagnosisService` | Full flow works end-to-end with mock data |
 | **2. Train model** | `ml/` scripts, trained `.tflite`, `labels.txt`, evaluation report | Above 95% on PlantVillage test; field-photo accuracy measured; `T` chosen |
 | **3. On-device inference** | `TfliteClassifier` + `treatments.json` for all 38 classes | Real offline diagnoses in the app, under 300 ms on a mid-range phone |
