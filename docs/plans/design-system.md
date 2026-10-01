@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Steps 1–2 are done.
+**Status:** approved 2026-10-01. Steps 1–3 are done.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [CLAUDE.md §2](../../CLAUDE.md)
 
@@ -168,6 +168,8 @@ lib/design_system/
     leaf_motion.dart           # static consts
   theme/
     leaf_theme.dart            # LeafTheme.light() / LeafTheme.dark() → ThemeData
+    leaf_component_themes.dart # Material component overrides
+    leaf_page_transitions_builder.dart # fade + 8 px rise
     leaf_context.dart          # extension: context.leafColors, context.leafText
   icons/
     leaf_icons.dart            # semantic icon names → Phosphor
@@ -194,7 +196,7 @@ lib/design_system/
 | Cards, dialogs, bottom sheets | Flat, hairline border, our radii, `surface` colour. |
 | Snack bars | Floating, `textPrimary` background with `background` text, radius `md`. |
 | Progress, switches, checkboxes | Use `primary` and `borderStrong`. |
-| Page transitions | Fade combined with an 8 px upward slide, the same on iOS and Android. |
+| Page transitions | Fade combined with an 8 px upward slide on Android and other platforms. **iOS keeps the native Cupertino transition**, because replacing it removes the edge swipe-back gesture iOS users expect. Changed during step 3. |
 | Text selection | `primary` cursor, and `primaryContainer` for the selection highlight. |
 
 ## 5. Interaction and accessibility standards (every component)
