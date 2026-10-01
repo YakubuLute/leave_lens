@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** draft, awaiting approval
+**Status:** approved 2026-10-01. Step 1 is done.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [CLAUDE.md §2](../../CLAUDE.md)
 
@@ -22,7 +22,7 @@ Build a small, strict design system with an **earthy** look: warm, natural and c
 |---|---|
 | **Warm, not clinical** | Cream canvas, warm neutrals, olive primary, terracotta accent. No pure white or pure black. |
 | **Flat and tactile** | Hairline borders instead of shadows. Soft corners. A press makes the element shrink slightly (to 0.97 scale) instead of showing a ripple. |
-| **Calm confidence** | Generous spacing. A serif for headings gives an editorial, trustworthy voice. Body text is a friendly sans-serif. |
+| **Calm confidence** | Generous spacing, and Inter set with strong, tightly spaced headings. |
 | **Readable in the field** | All text meets WCAG AA contrast or better. Body text is at least 16 sp. Tap targets are large. |
 | **Status is unmistakable** | Healthy, diseased and uncertain each have their own colour, **always** paired with an icon and a text label. |
 
@@ -87,20 +87,21 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 
 ### 3.2 Typography
 
-- **Headings:** **Fraunces**, a warm, soft serif in the same spirit as the mockup.
-- **Body and UI text:** **DM Sans**, friendly and very legible.
-- Both fonts are under the SIL Open Font License. They're **bundled in `assets/fonts/`**, not loaded at runtime with `google_fonts`, because the app must work offline.
+- **Font: Inter** for all text, headings and body alike. It's a clean, very legible sans-serif made for screens.
+- The look stays warm through the palette, generous spacing and a tight, confident heading style: heavier weight and slightly negative letter spacing.
+- The heading font is its own token (`LeafTypography.headingFamily`). A serif can be brought back later by changing that one line.
+- Inter is under the SIL Open Font License. Four static weights (400/500/600/700) from Inter v4.1 are **bundled in `assets/fonts/`**, not fetched at runtime, because the app must work offline. The licence ships as `assets/fonts/OFL.txt` and is registered with Flutter's `LicenseRegistry`.
 
-| Token | Font | Size / line height (sp) | Weight | Use |
+| Token | Size / line height (sp) | Weight | Letter spacing | Use |
 |---|---|---|---|---|
-| `display` | Fraunces | 32 / 40 | 600 | Hero headings, the result's disease name |
-| `headline` | Fraunces | 24 / 32 | 600 | Screen titles |
-| `title` | Fraunces | 20 / 28 | 500 | Card titles, sections |
-| `titleSmall` | DM Sans | 17 / 24 | 600 | List titles, emphasis |
-| `body` | DM Sans | 16 / 24 | 400 | Default text |
-| `bodySmall` | DM Sans | 14 / 20 | 400 | Secondary text |
-| `label` | DM Sans | 15 / 20 | 600 | Buttons, tabs, badges |
-| `caption` | DM Sans | 12 / 16 | 500 | Metadata only. Never for essential information. |
+| `display` | 32 / 40 | 700 | −0.6 | Hero headings, the result's disease name |
+| `headline` | 24 / 32 | 700 | −0.4 | Screen titles |
+| `title` | 20 / 28 | 600 | −0.2 | Card titles, sections |
+| `titleSmall` | 17 / 24 | 600 | 0 | List titles, emphasis |
+| `body` | 16 / 24 | 400 | 0 | Default text |
+| `bodySmall` | 14 / 20 | 400 | 0 | Secondary text |
+| `label` | 15 / 20 | 600 | 0 | Buttons, tabs, badges |
+| `caption` | 12 / 16 | 500 | +0.2 | Metadata only. Never for essential information. |
 
 Layouts must still work at **200% system text scale**, with no clipped text.
 
@@ -180,7 +181,7 @@ lib/design_system/
 |---|---|
 | Tap feedback | `splashFactory: NoSplash.splashFactory` and `highlightColor: transparent`. Components handle press feedback themselves (scale and opacity). |
 | Surfaces | `surfaceTintColor: transparent` everywhere. `scaffoldBackgroundColor` is `background`. |
-| App bar | Same colour as the page, elevation 0, no colour change on scroll, Fraunces title aligned left. |
+| App bar | Same colour as the page, elevation 0, no colour change on scroll, title aligned left. |
 | Buttons | Filled, outlined and text button themes styled to match `LeafButton`, for package screens. |
 | Inputs | Filled with `surfaceSunken`, radius `md`, `borderStrong` outline, 2 px `primary` border when focused. |
 | Cards, dialogs, bottom sheets | Flat, hairline border, our radii, `surface` colour. |
@@ -204,7 +205,7 @@ lib/design_system/
 | Component | Variants and API (summary) | Notes |
 |---|---|---|
 | `LeafScaffold` | `title`, `body`, `actions`, `bottom` | Page background, safe area and side margins |
-| `LeafAppBar` | `title`, `leading`, `actions` | Flat, serif title |
+| `LeafAppBar` | `title`, `leading`, `actions` | Flat, left-aligned title |
 | `LeafGap` | `LeafGap.md()` etc. | Spacing from tokens, so features never write `SizedBox(height: 13)` |
 | `LeafButton` | `variant: primary/secondary/ghost/danger`, `size: md/lg`, `icon`, `isLoading`, `expand` | Press-to-scale feedback |
 | `LeafIconButton` | `variant`, required `semanticLabel` | n/a |
@@ -241,7 +242,7 @@ lib/design_system/
 | Package | Why |
 |---|---|
 | `phosphor_flutter` | Icons |
-| Fraunces and DM Sans `.ttf` files | Bundled fonts, declared in `pubspec.yaml` |
+| Inter `.ttf` files (v4.1, 400–700) | Bundled fonts, declared in `pubspec.yaml` |
 
 No other packages are needed. Riverpod and go_router come in Phase 1.
 
@@ -278,14 +279,14 @@ Each step ends with `flutter analyze` and `flutter test` passing.
 | Risk | Mitigation |
 |---|---|
 | The terracotta accent and the "diseased" red look too similar | Make "diseased" a cooler brick red, keep the accent away from result screens, and always show status with icon and label |
-| Fraunces renders large on small screens | The type scale is tested at 200%. Long disease names fall back to the `headline` size. |
+| Long disease names overflow at large text sizes | The type scale is tested at 200%. Long disease names fall back to the `headline` size. |
 | Package screens (camera, cropper) look native and off-brand | Theme what we can (`image_cropper` accepts colours), and accept that the native camera screen will look native |
 | Spending too long polishing the design system | Stick to the v1 list. v2 components are built only when a feature needs them. |
 
-## 12. Open questions
+## 12. Decisions (2026-10-01)
 
-1. **Accent versus "diseased".** Are you happy with terracotta as the brand accent and brick red for disease? The alternative is an ochre/gold accent, which removes the overlap entirely.
-2. **Fonts.** Fraunces and DM Sans? Alternatives: Lora with Nunito Sans (softer), or Young Serif with Inter (crisper).
-3. **Icons.** Phosphor (rounded, has a duotone style) or Lucide (thinner, more minimal)?
-4. **Dark mode.** I've specified the dark tokens. Should dark mode ship in v1, or should we polish light mode first and ship dark later?
-5. **Golden tests.** Adding them gives visual regression checks but makes tests depend on the platform. I'd add them for the five most important components only. Agree?
+1. **Accent versus "diseased":** terracotta brand accent and brick red for disease, kept apart as described in §11.
+2. **Font:** Inter for everything (see §3.2).
+3. **Icons:** Phosphor (`phosphor_flutter` ^2.1.0).
+4. **Dark mode:** included in v1, with the tokens in §3.1.
+5. **Golden tests:** only for the five key components: `LeafButton`, `LeafCard`, `StatusBadge`, `ConfidenceMeter` and `ScanButton`.

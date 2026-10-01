@@ -189,5 +189,4 @@ On-device and cloud results look the same to the UI:
 5. **Feedback loop.** Should users be able to mark a diagnosis wrong, so we can collect data for retraining?
 
 ## 6. Environment notes
-- `flutter` isn't on the shell PATH, so it can't be run from a terminal right now. Add the Flutter SDK's `bin` to PATH, or keep using the IDE.
-- The project isn't a git repository yet. Phase 0 starts with `git init`.
+- Flutter SDK: `~/Documents/develop/flutter` (3.47.5, Dart 3.13.4). It's on `PATH` through `~/.zshrc`.

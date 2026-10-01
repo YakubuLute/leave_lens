@@ -156,7 +156,7 @@ flutter test             # run tests
 flutter run              # run on a device/simulator
 ```
 
-`flutter` isn't on the shell `PATH` on this machine yet. If a command fails with "command not found", ask the user for the SDK path instead of skipping verification.
+The Flutter SDK is at `~/Documents/develop/flutter` and is on `PATH` through `~/.zshrc`. If `flutter` isn't found in a non-interactive shell, call `~/Documents/develop/flutter/bin/flutter` directly. Never skip verification.
 
 ## 6. Git
 
