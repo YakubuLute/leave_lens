@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Step 1 is done.
+**Status:** approved 2026-10-01. Steps 1–2 are done.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [CLAUDE.md §2](../../CLAUDE.md)
 
@@ -40,7 +40,7 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 | `surface` | `#FFFBF3` | Cards, sheets | n/a |
 | `surfaceSunken` | `#EFE6D4` | Input fills, insets | n/a |
 | `border` | `#DCCFB4` | Decorative hairlines | n/a |
-| `borderStrong` | `#9C8862`* | Control outlines (inputs, chips) | target ≥ 3:1 |
+| `borderStrong` | `#8F7B57` | Control outlines (inputs, chips): `background` / `surface` / `surfaceSunken` | **3.6 / 4.0 / 3.3** (UI boundary AA is 3:1) |
 | `textPrimary` | `#3A2E1F` | `background` | **11.7** |
 | `textSecondary` | `#6B5B45` | `background` | **5.8** |
 | `textMuted` | `#786852` | `background` | **4.8** |
@@ -53,8 +53,6 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 | `accentContainer` | `#F6E0D2` | n/a | n/a |
 | `onAccentContainer` | `#6E3412` | `accentContainer` | **7.6** |
 
-\* The exact `borderStrong` value will be tuned and checked during implementation.
-
 **Status colours.** These are reserved for diagnosis results only. Each status has three tokens:
 - `fg`: text and icon colour on the status's tinted background.
 - `bg`: the tinted background itself.
@@ -64,7 +62,7 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 |---|---|---|---|---|---|---|
 | `healthy` (jade, distinct from the olive brand colour) | `#1D5A3F` | `#DDEFE4` | **6.8** | `#2A7454` | **5.0** | `#FFFBF3`: **5.5** |
 | `diseased` (brick red) | `#7A1F1A` | `#F6D9D5` | **7.8** | `#A1302A` | **6.3** | `#FFFBF3`: **6.9** |
-| `uncertain` (ochre) | `#6B4A0C` | `#F5E7C8` | **6.6** | `#8A5D0E` | **5.1** | n/a |
+| `uncertain` (ochre) | `#6B4A0C` | `#F5E7C8` | **6.6** | `#8A5D0E` | **5.1** | `#FFFBF3`: **5.6** |
 | `notALeaf` | uses neutral tokens | n/a | n/a | n/a | n/a | n/a |
 
 **Dark mode.** Warm charcoal, not blue-black. Every pair is checked against its own background.
@@ -75,15 +73,23 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 | `surface` | `#201C16` | n/a | n/a |
 | `surfaceSunken` | `#110E0B` | n/a | n/a |
 | `border` | `#3A3328` | n/a | n/a |
+| `borderStrong` | `#857760` | `background` / `surface` / `surfaceSunken` | **4.2 / 3.9 / 4.4** |
 | `textPrimary` | `#F1E9DA` | `background` | **15.4** |
 | `textSecondary` | `#C2B49C` | `background` | **9.1** |
 | `textMuted` | `#9A8C75` | `surface` | **5.2** |
 | `onPrimary` | `#1E2A10` | `primary` `#A9C47F` | **7.8** |
+| `primary` | `#A9C47F` | `background` | **9.6** |
 | `onPrimaryContainer` | `#DCE8C6` | `primaryContainer` `#34461F` | **8.0** |
 | `accent` | `#E39A6B` | `background` | **8.0** |
+| `onAccent` | `#2A1406` | `accent` | **7.6** |
+| `onAccentContainer` | `#F6D2BA` | `accentContainer` `#4A2A15` | **9.1** |
 | `healthy` `fg` | `#8AD3A9` | `bg` `#173A2A` | **7.2** |
 | `diseased` `fg` | `#F4A497` | `bg` `#4A1C17` | **7.2** |
 | `uncertain` `fg` | `#EBC67E` | `bg` `#3D2D0E` | **8.2** |
+| `healthy` / `diseased` / `uncertain` `solid` | `#5FB98A` / `#E8806E` / `#D9A84E` | `background` | **7.8 / 6.8 / 8.5** |
+| On-solid text (all statuses) | `#16130F` | each `solid` | **≥ 6.8** |
+
+The contrast pairs above are enforced by `test/design_system/tokens/leaf_colors_contrast_test.dart`.
 
 ### 3.2 Typography
 
@@ -154,6 +160,7 @@ lib/design_system/
   tokens/
     leaf_palette.dart          # raw hex values (private to the design system)
     leaf_colors.dart           # semantic colour set (light + dark), ThemeExtension
+    leaf_status.dart           # LeafStatus enum (healthy, diseased, uncertain, notALeaf)
     leaf_typography.dart       # text styles, ThemeExtension
     leaf_spacing.dart          # static consts
     leaf_radii.dart            # static consts
