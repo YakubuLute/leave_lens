@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Steps 1–3 are done.
+**Status:** approved 2026-10-01. Steps 1–4 are done.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [CLAUDE.md §2](../../CLAUDE.md)
 
