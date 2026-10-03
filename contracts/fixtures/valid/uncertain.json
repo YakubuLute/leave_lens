@@ -1,0 +1,21 @@
+{
+  "status": "uncertain",
+  "crop": "Pepper",
+  "disease": "Bacterial spot",
+  "pathogen": null,
+  "confidence": 0.48,
+  "severity": null,
+  "source": "cloud",
+  "symptoms": [
+    "Small dark spots on leaves; image is blurry"
+  ],
+  "treatment": {
+    "immediate": [
+      "Retake the photo in daylight, close to a single leaf"
+    ],
+    "organic": [],
+    "chemical": [],
+    "prevention": []
+  },
+  "disclaimer": "Guidance only — confirm with a local agricultural extension officer before applying any chemical treatment."
+}
