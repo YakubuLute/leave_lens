@@ -1,7 +1,7 @@
 /// Spacing scale on a 4 pt grid.
 ///
 /// Use these for every padding, margin and gap. A literal like
-/// `EdgeInsets.all(13)` in feature code is a bug (CLAUDE.md §2).
+/// `EdgeInsets.all(13)` in feature code is a bug (app/CLAUDE.md §1).
 abstract final class LeafSpacing {
   /// 4
   static const double xxs = 4;

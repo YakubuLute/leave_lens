@@ -2,7 +2,8 @@
 
 **Status:** approved 2026-10-01. Steps 1–4 are done.
 **Roadmap phase:** 0 (Setup)
-**Rules:** [CLAUDE.md §2](../../CLAUDE.md)
+**Rules:** [app/CLAUDE.md §1](../../app/CLAUDE.md)
+**Paths:** relative to `app/`
 
 ## 1. Goal
 
@@ -281,7 +282,7 @@ Each step ends with `flutter analyze` and `flutter test` passing.
 6. Build the diagnosis components: `StatusBadge`, `ConfidenceMeter`, `ScanButton` and `LeafImageFrame`, with tests.
 7. Build the structure and feedback components: `LeafTabs`, `LeafListTile`, `LeafNotice`, `LeafSheet`, `LeafStateView` and `LeafToast`, with tests.
 8. Build the gallery and the sample result screen.
-9. Do a final review against CLAUDE.md §2 and §4, then commit.
+9. Do a final review against app/CLAUDE.md §1 and §3, then commit.
 
 ## 11. Risks
 
