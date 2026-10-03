@@ -1,4 +1,4 @@
-package com.lute.leaf_lense;
+package com.lute.leaf_lens;
 
 import io.flutter.embedding.android.FlutterActivity;
 

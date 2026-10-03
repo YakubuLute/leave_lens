@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:leaf_lense/design_system/tokens/leaf_colors.dart';
+import 'package:leaf_lens/design_system/tokens/leaf_colors.dart';
 
 /// The Leaf Lens type scale.
 ///

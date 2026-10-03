@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:leaf_lense/design_system/design_system.dart';
+import 'package:leaf_lens/design_system/design_system.dart';
 
 void main() {
   final modes = {

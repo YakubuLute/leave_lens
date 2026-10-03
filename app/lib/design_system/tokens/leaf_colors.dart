@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:leaf_lense/design_system/tokens/leaf_palette.dart';
-import 'package:leaf_lense/design_system/tokens/leaf_status.dart';
+import 'package:leaf_lens/design_system/tokens/leaf_palette.dart';
+import 'package:leaf_lens/design_system/tokens/leaf_status.dart';
 
 /// Colours for one diagnosis status.
 @immutable

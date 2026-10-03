@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:leaf_lense/design_system/tokens/leaf_motion.dart';
+import 'package:leaf_lens/design_system/tokens/leaf_motion.dart';
 
 /// Page transition: fade in while rising 8 px.
 ///

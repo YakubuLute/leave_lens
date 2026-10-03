@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:leaf_lense/app/app.dart';
-import 'package:leaf_lense/design_system/design_system.dart';
+import 'package:leaf_lens/app/app.dart';
+import 'package:leaf_lens/design_system/design_system.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

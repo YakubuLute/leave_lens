@@ -1,6 +1,6 @@
 import 'package:flutter/painting.dart';
 
-import 'package:leaf_lense/design_system/tokens/leaf_colors.dart';
+import 'package:leaf_lens/design_system/tokens/leaf_colors.dart';
 
 /// Elevation tokens.
 ///

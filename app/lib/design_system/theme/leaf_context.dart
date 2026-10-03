@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:leaf_lense/design_system/tokens/leaf_colors.dart';
-import 'package:leaf_lense/design_system/tokens/leaf_typography.dart';
+import 'package:leaf_lens/design_system/tokens/leaf_colors.dart';
+import 'package:leaf_lens/design_system/tokens/leaf_typography.dart';
 
 /// Shortcuts for reading design tokens from the current theme.
 extension LeafThemeContext on BuildContext {

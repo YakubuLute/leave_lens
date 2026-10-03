@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:leaf_lense/design_system/design_system.dart';
+import 'package:leaf_lens/design_system/design_system.dart';
 
 /// Temporary landing screen proving the theme is wired up.
 ///
