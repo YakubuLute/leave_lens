@@ -1,6 +1,6 @@
 # Plan: Monorepo restructure
 
-**Status:** approved 2026-10-03
+**Status:** approved 2026-10-03. Implemented on `chore/monorepo`; CI verification pending the first push.
 **Branch:** `chore/monorepo` (from `development` at `c5e6734`)
 
 ## 1. Goal
