@@ -42,26 +42,28 @@ See [docs/PLAN.md](docs/PLAN.md) for the decision rule, the result format, and w
 
 ## Project structure
 
-The structure below is the plan. Most of these folders don't exist yet.
+Leaf Lens is a monorepo. Each part has its own tooling and its own `CLAUDE.md` with contributor rules.
 
 ```
-leaf_lense/
-├── lib/            # Flutter app (screens, services, domain models)
-├── assets/         # leaf_model.tflite, labels.txt, treatments.json
-├── ml/             # Model training, export and evaluation scripts
-├── backend/        # FastAPI diagnosis proxy
-├── docs/PLAN.md    # Architecture and roadmap
-├── android/ ios/   # Platform projects
-└── test/
+leave_lens/
+├── app/          # Flutter app: design system, screens, on-device inference
+├── backend/      # FastAPI service: cloud diagnosis proxy to Claude
+├── contracts/    # JSON Schema + fixtures shared by app and backend
+├── docs/         # PLAN.md (architecture, roadmap) and feature plans
+└── ml/           # (Phase 2) model training, export and evaluation
 ```
 
 ## Getting started
+
+### App (`app/`)
 
 **Prerequisites:**
 - Flutter SDK with Dart `^3.13.4`, with `flutter` on your `PATH`.
 - Xcode for iOS, or Android Studio for Android.
 
-**Run the app:**
+```bash
+cd app
+```
 
 ```bash
 flutter pub get
@@ -71,7 +73,27 @@ flutter pub get
 flutter run
 ```
 
-Setup steps for model training (`ml/`) and the backend (`backend/`) will be added as those parts are built.
+### Backend (`backend/`)
+
+**Prerequisites:** [uv](https://docs.astral.sh/uv/). It installs the right Python version for you.
+
+```bash
+cd backend
+```
+
+```bash
+uv sync
+```
+
+```bash
+uv run uvicorn leaf_lens_api.main:app --reload
+```
+
+The full command list is in [backend/README.md](backend/README.md).
+
+### ML (`ml/`)
+
+Setup steps will be added in Phase 2.
 
 ## Roadmap
 
