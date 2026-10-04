@@ -1,6 +1,6 @@
 # Plan: Monorepo restructure
 
-**Status:** approved 2026-10-03. Implemented on `chore/monorepo`; CI verification pending the first push.
+**Status:** done. Merged in PR #2 on 2026-10-04, with App and Backend CI green.
 **Branch:** `chore/monorepo` (from `development` at `c5e6734`)
 
 ## 1. Goal
