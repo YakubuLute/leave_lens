@@ -1,9 +1,16 @@
 /// The Leaf Lens design system — the only import features should use.
 ///
-/// `tokens/leaf_palette.dart` is deliberately not exported: features use the
-/// semantic roles in [LeafColors], never raw palette values.
+/// Deliberately not exported: `tokens/leaf_palette.dart` (features use the
+/// semantic roles in [LeafColors], never raw values) and
+/// `components/leaf_pressable.dart` (an internal building block).
 library;
 
+export 'package:leaf_lens/design_system/components/leaf_app_bar.dart';
+export 'package:leaf_lens/design_system/components/leaf_button.dart';
+export 'package:leaf_lens/design_system/components/leaf_card.dart';
+export 'package:leaf_lens/design_system/components/leaf_gap.dart';
+export 'package:leaf_lens/design_system/components/leaf_icon_button.dart';
+export 'package:leaf_lens/design_system/components/leaf_scaffold.dart';
 export 'package:leaf_lens/design_system/icons/leaf_icons.dart';
 export 'package:leaf_lens/design_system/theme/leaf_context.dart';
 export 'package:leaf_lens/design_system/theme/leaf_font_licenses.dart';
