@@ -130,13 +130,13 @@ abstract final class LeafComponentThemes {
         hintStyle: t.body.copyWith(color: c.textMuted),
         labelStyle: t.body.copyWith(color: c.textSecondary),
         helperStyle: t.bodySmall.copyWith(color: c.textSecondary),
-        errorStyle: t.bodySmall.copyWith(color: c.diseased.solid),
+        errorStyle: t.bodySmall.copyWith(color: c.danger),
         border: _inputBorder(c.borderStrong),
         enabledBorder: _inputBorder(c.borderStrong),
         disabledBorder: _inputBorder(_disabled(c.borderStrong)),
         focusedBorder: _inputBorder(c.primary, width: 2),
-        errorBorder: _inputBorder(c.diseased.solid),
-        focusedErrorBorder: _inputBorder(c.diseased.solid, width: 2),
+        errorBorder: _inputBorder(c.danger),
+        focusedErrorBorder: _inputBorder(c.danger, width: 2),
       );
 
   static RoundedRectangleBorder _outlined(LeafColors c, BorderRadius radius) =>

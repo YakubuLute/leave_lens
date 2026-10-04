@@ -76,6 +76,10 @@ class LeafColors extends ThemeExtension<LeafColors> {
     required this.onAccent,
     required this.accentContainer,
     required this.onAccentContainer,
+    required this.danger,
+    required this.onDanger,
+    required this.dangerContainer,
+    required this.onDangerContainer,
     required this.healthy,
     required this.diseased,
     required this.uncertain,
@@ -101,6 +105,10 @@ class LeafColors extends ThemeExtension<LeafColors> {
     onAccent: LeafPalette.sand50,
     accentContainer: LeafPalette.terracotta100,
     onAccentContainer: LeafPalette.terracotta800,
+    danger: LeafPalette.brick600,
+    onDanger: LeafPalette.sand50,
+    dangerContainer: LeafPalette.brick100,
+    onDangerContainer: LeafPalette.brick800,
     healthy: LeafStatusColors(
       fg: LeafPalette.jade800,
       bg: LeafPalette.jade100,
@@ -141,6 +149,10 @@ class LeafColors extends ThemeExtension<LeafColors> {
     onAccent: LeafPalette.terracotta950,
     accentContainer: LeafPalette.terracotta850,
     onAccentContainer: LeafPalette.terracotta150,
+    danger: LeafPalette.brick400,
+    onDanger: LeafPalette.bark900,
+    dangerContainer: LeafPalette.brick900,
+    onDangerContainer: LeafPalette.brick300,
     healthy: LeafStatusColors(
       fg: LeafPalette.jade300,
       bg: LeafPalette.jade900,
@@ -211,6 +223,20 @@ class LeafColors extends ThemeExtension<LeafColors> {
   /// Text and icons on [accentContainer].
   final Color onAccentContainer;
 
+  /// Destructive actions and form errors. Shares the brick hue with
+  /// [diseased] but is a separate role, so status colours stay reserved for
+  /// diagnosis results.
+  final Color danger;
+
+  /// Text and icons on [danger].
+  final Color onDanger;
+
+  /// Quiet danger tint, e.g. an error notice background.
+  final Color dangerContainer;
+
+  /// Text and icons on [dangerContainer].
+  final Color onDangerContainer;
+
   /// Reserved for the "healthy" diagnosis status.
   final LeafStatusColors healthy;
 
@@ -260,6 +286,10 @@ class LeafColors extends ThemeExtension<LeafColors> {
     Color? onAccent,
     Color? accentContainer,
     Color? onAccentContainer,
+    Color? danger,
+    Color? onDanger,
+    Color? dangerContainer,
+    Color? onDangerContainer,
     LeafStatusColors? healthy,
     LeafStatusColors? diseased,
     LeafStatusColors? uncertain,
@@ -283,6 +313,10 @@ class LeafColors extends ThemeExtension<LeafColors> {
       onAccent: onAccent ?? this.onAccent,
       accentContainer: accentContainer ?? this.accentContainer,
       onAccentContainer: onAccentContainer ?? this.onAccentContainer,
+      danger: danger ?? this.danger,
+      onDanger: onDanger ?? this.onDanger,
+      dangerContainer: dangerContainer ?? this.dangerContainer,
+      onDangerContainer: onDangerContainer ?? this.onDangerContainer,
       healthy: healthy ?? this.healthy,
       diseased: diseased ?? this.diseased,
       uncertain: uncertain ?? this.uncertain,
@@ -312,6 +346,10 @@ class LeafColors extends ThemeExtension<LeafColors> {
       onAccent: c(onAccent, other.onAccent),
       accentContainer: c(accentContainer, other.accentContainer),
       onAccentContainer: c(onAccentContainer, other.onAccentContainer),
+      danger: c(danger, other.danger),
+      onDanger: c(onDanger, other.onDanger),
+      dangerContainer: c(dangerContainer, other.dangerContainer),
+      onDangerContainer: c(onDangerContainer, other.onDangerContainer),
       healthy: LeafStatusColors.lerp(healthy, other.healthy, t),
       diseased: LeafStatusColors.lerp(diseased, other.diseased, t),
       uncertain: LeafStatusColors.lerp(uncertain, other.uncertain, t),

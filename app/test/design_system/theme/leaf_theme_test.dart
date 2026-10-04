@@ -26,6 +26,7 @@ void main() {
         expect(scheme.surface, colors.surface);
         expect(scheme.onSurface, colors.textPrimary);
         expect(scheme.outline, colors.borderStrong);
+        expect(scheme.error, colors.danger);
         expect(scheme.surfaceTint, Colors.transparent);
       });
 
