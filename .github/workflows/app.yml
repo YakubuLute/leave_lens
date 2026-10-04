@@ -43,4 +43,5 @@ jobs:
         run: flutter analyze
 
       - name: Test
-        run: flutter test
+        # Golden tests are rendered on macOS; Linux text rendering differs.
+        run: flutter test --exclude-tags golden

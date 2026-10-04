@@ -30,9 +30,13 @@ lib/design_system/
     leaf_component_themes.dart # Material component overrides
     leaf_context.dart       # context.leafColors / context.leafText
     leaf_page_transitions_builder.dart
-    leaf_font_licenses.dart # registers the bundled Inter licence
+    leaf_font_licenses.dart # registers the bundled Inter and Phosphor licences
+  icons/
+    leaf_icons.dart         # semantic icon names → bundled Phosphor font
   components/
-    leaf_button.dart, leaf_card.dart, status_badge.dart, scan_button.dart, …
+    leaf_pressable.dart     # internal: press, focus ring, semantics — not exported
+    leaf_scaffold.dart, leaf_app_bar.dart, leaf_gap.dart,
+    leaf_button.dart, leaf_icon_button.dart, leaf_card.dart, …
   design_system.dart        # barrel export — the only import features use
 ```
 
@@ -47,8 +51,9 @@ lib/design_system/
    - Reads all styling from the theme and tokens.
    - Supports light and dark mode and handles disabled and loading states.
    - Has a semantic label for accessibility and touch targets of at least 48×48.
+   - Builds tap behaviour on `LeafPressable`, so press feedback, focus rings and semantics stay consistent.
    - Has a widget test.
-4. **Status colours are reserved.** `healthy`, `diseased` and `uncertain` are only for diagnosis status. Always pair them with a text label and an icon, never colour alone.
+4. **Status colours are reserved.** `healthy`, `diseased` and `uncertain` are only for diagnosis status. Always pair them with a text label and an icon, never colour alone. Destructive actions and form errors use the separate `danger` role.
 5. **Readable outdoors.** People use the app in sunlight, so keep text contrast at WCAG AA or better and avoid tiny or light-grey text.
 6. **The theme is the single source of truth.** `leaf_theme.dart` overrides Material defaults: no ripple splash, no surface tint, flat elevation with borders, custom fonts and shapes. That way, any Material widgets a package shows still match the app.
 7. **Change tokens, not call sites.** To change the look, update the tokens or the theme. Don't patch individual screens.
@@ -138,9 +143,17 @@ Run from `app/`:
 flutter pub get          # install dependencies
 flutter analyze          # static analysis — must be clean
 dart format .            # format
-flutter test             # run tests
+flutter test             # run tests (includes goldens)
 flutter run              # run on a device/simulator
 ```
+
+**Golden tests** (screenshots of key components) are tagged `golden`. They're rendered on macOS and skipped in CI (`--exclude-tags golden`), because Linux renders text slightly differently. After an intentional visual change, regenerate them on macOS and check the new images before committing:
+
+```bash
+flutter test --tags golden --update-goldens
+```
+
+**Icons** come from the Phosphor font bundled in `assets/fonts/`. To add one, add a `const IconData` with its codepoint to `LeafIcons`, never an icon package.
 
 The Flutter SDK is at `~/Documents/develop/flutter` and is on `PATH` through `~/.zshrc`. If `flutter` isn't found in a non-interactive shell, call `~/Documents/develop/flutter/bin/flutter` directly. Never skip verification.
 
