@@ -4,6 +4,7 @@
 /// semantic roles in [LeafColors], never raw palette values.
 library;
 
+export 'package:leaf_lens/design_system/icons/leaf_icons.dart';
 export 'package:leaf_lens/design_system/theme/leaf_context.dart';
 export 'package:leaf_lens/design_system/theme/leaf_font_licenses.dart';
 export 'package:leaf_lens/design_system/theme/leaf_page_transitions_builder.dart';

@@ -48,15 +48,18 @@ void main() {
     expect(app.title, LeafLensApp.title);
   });
 
-  test('registers the Inter licence', () async {
+  test('registers the bundled font licences', () async {
     TestWidgetsFlutterBinding.ensureInitialized();
     registerLeafFontLicenses();
 
     final entries = await LicenseRegistry.licenses.toList();
-    final inter = entries.where((e) => e.packages.contains('Inter'));
+    String textFor(String package) => entries
+        .firstWhere((e) => e.packages.contains(package))
+        .paragraphs
+        .map((p) => p.text)
+        .join('\n');
 
-    expect(inter, isNotEmpty);
-    final text = inter.first.paragraphs.map((p) => p.text).join('\n');
-    expect(text, contains('SIL Open Font License'));
+    expect(textFor('Inter'), contains('SIL Open Font License'));
+    expect(textFor('Phosphor Icons'), contains('MIT License'));
   });
 }
