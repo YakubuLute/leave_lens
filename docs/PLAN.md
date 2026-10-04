@@ -45,7 +45,9 @@ Leaf Lens is a Flutter app. You take or upload a photo of a leaf, and it tells y
 
 ## 2. Components
 
-### 2.1 Flutter app (`lib/`)
+### 2.1 Flutter app (`app/`)
+
+Paths in this section are relative to `app/`.
 
 ```
 lib/
@@ -53,7 +55,7 @@ lib/
   app/
     app.dart                   # MaterialApp wired to LeafTheme
     router.dart                # go_router routes
-  design_system/               # tokens, theme, Leaf* components (see CLAUDE.md §2)
+  design_system/               # tokens, theme, Leaf* components (see app/CLAUDE.md §1)
   core/                        # errors, result types, config, utils
   domain/
     diagnosis.dart             # Diagnosis model (shared schema, see §3)
@@ -120,6 +122,8 @@ ml/
 
 ### 2.3 Backend proxy (`backend/`)
 
+The `Diagnosis` JSON it returns is defined in `contracts/diagnosis.schema.json` (§3).
+
 The Claude API key **must not ship inside the app**, so the app calls a thin service of our own instead.
 
 - **Stack:** Python **FastAPI**, matching the ML tooling, deployed to Cloud Run, Fly.io or Railway.
@@ -137,6 +141,8 @@ The Claude API key **must not ship inside the app**, so the app calls a thin ser
 ---
 
 ## 3. Shared `Diagnosis` schema
+
+The source of truth is [`contracts/diagnosis.schema.json`](../contracts/diagnosis.schema.json). The example below is illustrative.
 
 On-device and cloud results look the same to the UI:
 
@@ -190,3 +196,4 @@ On-device and cloud results look the same to the UI:
 
 ## 6. Environment notes
 - Flutter SDK: `~/Documents/develop/flutter` (3.47.5, Dart 3.13.4). It's on `PATH` through `~/.zshrc`.
+- Python tooling: `uv` 0.12 (Homebrew). The backend pins Python 3.14 in `backend/.python-version`.

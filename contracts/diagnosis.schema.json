@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:leaf-lens:contracts:diagnosis:v1",
+  "title": "Diagnosis",
+  "description": "Result of analysing one leaf photo. Produced by the on-device model (app) or the cloud service (backend) and rendered by the app. Every field is always present; use null when it does not apply. Unknown extra fields must be ignored by readers, so adding optional fields is non-breaking.",
+  "type": "object",
+  "required": [
+    "status",
+    "crop",
+    "disease",
+    "pathogen",
+    "confidence",
+    "severity",
+    "source",
+    "symptoms",
+    "treatment",
+    "disclaimer"
+  ],
+  "properties": {
+    "status": {
+      "description": "Overall outcome. 'uncertain' means confidence was too low to commit to an answer.",
+      "enum": ["healthy", "diseased", "uncertain", "not_a_leaf"]
+    },
+    "crop": {
+      "description": "Identified plant, e.g. 'Tomato'. Null when unknown or not a leaf.",
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "disease": {
+      "description": "Common disease name, e.g. 'Late blight'. Required for 'diseased'; a best guess or null for 'uncertain'; null otherwise.",
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "pathogen": {
+      "description": "Scientific name of the causal organism, e.g. 'Phytophthora infestans'.",
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "confidence": {
+      "description": "Model confidence in the status/disease, from 0 to 1.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "severity": {
+      "description": "How advanced the disease is. Null unless status is 'diseased' or 'uncertain'.",
+      "enum": ["mild", "moderate", "severe", null]
+    },
+    "source": {
+      "description": "Which engine produced the result.",
+      "enum": ["on_device", "cloud"]
+    },
+    "symptoms": {
+      "description": "Visible signs that support the diagnosis. May be empty.",
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "treatment": {
+      "description": "Guidance grouped by approach. Null when not a leaf.",
+      "oneOf": [{ "$ref": "#/$defs/treatment" }, { "type": "null" }]
+    },
+    "disclaimer": {
+      "description": "Safety note shown with every result.",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "diseased" } } },
+      "then": {
+        "properties": {
+          "disease": { "type": "string" },
+          "crop": { "type": "string" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "enum": ["healthy", "not_a_leaf"] } }
+      },
+      "then": {
+        "properties": {
+          "disease": { "type": "null" },
+          "pathogen": { "type": "null" },
+          "severity": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "not_a_leaf" } } },
+      "then": {
+        "properties": {
+          "crop": { "type": "null" },
+          "treatment": { "type": "null" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "advice": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "treatment": {
+      "type": "object",
+      "required": ["immediate", "organic", "chemical", "prevention"],
+      "properties": {
+        "immediate": {
+          "description": "Steps to take right away.",
+          "$ref": "#/$defs/advice"
+        },
+        "organic": {
+          "description": "Organic or cultural controls.",
+          "$ref": "#/$defs/advice"
+        },
+        "chemical": {
+          "description": "Chemical controls. Always phrased as 'follow label directions'.",
+          "$ref": "#/$defs/advice"
+        },
+        "prevention": {
+          "description": "How to avoid it next time.",
+          "$ref": "#/$defs/advice"
+        }
+      }
+    }
+  }
+}
