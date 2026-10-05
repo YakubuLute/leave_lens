@@ -17,6 +17,7 @@ class LeafPressable extends StatefulWidget {
     required this.onPressed,
     required this.borderRadius,
     this.semanticLabel,
+    this.isSelected,
     this.pressedScale = defaultPressedScale,
     super.key,
   });
@@ -43,6 +44,11 @@ class LeafPressable extends StatefulWidget {
   /// Accessible name. Replaces the child's text for screen readers; when
   /// `null`, the child's text is used.
   final String? semanticLabel;
+
+  /// Selection state for one-of-many controls such as tabs. `null` for
+  /// ordinary buttons. When set, the control is announced as selectable and
+  /// part of a mutually exclusive group, on the same node as its label.
+  final bool? isSelected;
 
   /// Scale applied while pressed. Larger surfaces use a subtler value.
   final double pressedScale;
@@ -76,6 +82,8 @@ class _LeafPressableState extends State<LeafPressable> {
       container: true,
       button: true,
       enabled: _isEnabled,
+      selected: widget.isSelected,
+      inMutuallyExclusiveGroup: widget.isSelected != null ? true : null,
       label: widget.semanticLabel,
       // An explicit label replaces the child's text rather than adding to it.
       excludeSemantics: widget.semanticLabel != null,
