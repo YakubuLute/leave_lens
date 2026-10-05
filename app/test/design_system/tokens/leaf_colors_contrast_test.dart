@@ -70,6 +70,15 @@ void main() {
         });
       }
 
+      for (final status in LeafStatus.values) {
+        test('${status.name}.solid stands out from the meter track', () {
+          expect(
+            contrastRatio(c.forStatus(status).solid, c.border),
+            greaterThanOrEqualTo(wcagAaNonText),
+          );
+        });
+      }
+
       for (final page in pages.entries) {
         test('borderStrong on ${page.key} meets AA for UI boundaries', () {
           expect(
