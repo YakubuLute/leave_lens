@@ -36,7 +36,9 @@ lib/design_system/
   components/
     leaf_pressable.dart     # internal: press, focus ring, semantics — not exported
     leaf_scaffold.dart, leaf_app_bar.dart, leaf_gap.dart,
-    leaf_button.dart, leaf_icon_button.dart, leaf_card.dart, …
+    leaf_button.dart, leaf_icon_button.dart, leaf_card.dart,
+    status_badge.dart, confidence_meter.dart, scan_button.dart,
+    leaf_image_frame.dart, …
   design_system.dart        # barrel export — the only import features use
 ```
 
