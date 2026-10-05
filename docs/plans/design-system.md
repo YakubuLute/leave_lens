@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Steps 1–5 are done.
+**Status:** approved 2026-10-01. Steps 1–6 are done.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [app/CLAUDE.md §1](../../app/CLAUDE.md)
 **Paths:** relative to `app/`
@@ -311,3 +311,21 @@ Each step ends with `flutter analyze` and `flutter test` passing.
   - Button semantics, where an explicit label replaces the child's text.
 - **`LeafGap`** is a small render object rather than a `SizedBox`, so it takes space only along a `Row` or `Column`'s main axis.
 - **Golden tests** are tagged `golden`. They're generated on macOS and skipped in Linux CI, because text rendering differs between platforms.
+
+### Decisions during step 6 (2026-10-05)
+
+- **`StatusBadge` default labels:** "Healthy", "Diseased", "Not sure" and "Not a leaf", each with its own icon. A `label` parameter overrides them, for translations later. `md` is 36 dp tall and `sm` is 28 dp, for list rows.
+- **`ConfidenceMeter` bands:**
+  - 85% and up reads "High confidence", 60% and up reads "Medium confidence", and anything lower reads "Low confidence".
+  - These are **presentation only**. The hybrid model's fallback threshold `T` stays in config (PLAN §1).
+  - The fill uses the status `solid` colour, on a track in the `border` colour. The track was first `surfaceSunken`, but that was nearly invisible on the dark page. Contrast tests require every status fill to reach at least 3:1 against the track.
+- **`ScanButton`:**
+  - An 88 dp olive disc with a camera icon and the `floating` shadow.
+  - While busy, it shows a spinner and a pulsing ring, ignores taps and is announced as "Scanning". The pulse is static when motion is reduced.
+  - A press gives a light haptic tap (§5).
+- **`LeafImageFrame`:**
+  - `xl` corners with a hairline border, and a fade-in on load.
+  - Shows a leaf placeholder when there's no image, and an info placeholder if the image fails to load.
+  - Decorative unless it's given a `semanticLabel`.
+- **Goldens** now cover all five key components from decision 5.
+

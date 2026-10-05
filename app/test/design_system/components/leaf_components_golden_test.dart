@@ -124,5 +124,85 @@ void main() {
         matchesGoldenFile('goldens/leaf_card_${brightness.name}.png'),
       );
     });
+
+    testWidgets('StatusBadge statuses and sizes, ${brightness.name}', (
+      tester,
+    ) async {
+      await pumpSheet(
+        tester,
+        brightness,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            for (final size in StatusBadgeSize.values) ...[
+              for (final status in LeafStatus.values) ...[
+                StatusBadge(status: status, size: size),
+                const LeafGap.xs(),
+              ],
+              const LeafGap.md(),
+            ],
+          ],
+        ),
+      );
+
+      await expectLater(
+        find.byKey(const Key('sheet')),
+        matchesGoldenFile('goldens/status_badge_${brightness.name}.png'),
+      );
+    });
+
+    testWidgets('ConfidenceMeter per status, ${brightness.name}', (
+      tester,
+    ) async {
+      const readings = [
+        (LeafStatus.healthy, 0.97),
+        (LeafStatus.diseased, 0.72),
+        (LeafStatus.uncertain, 0.48),
+        (LeafStatus.notALeaf, 0.99),
+      ];
+      await pumpSheet(
+        tester,
+        brightness,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final (status, value) in readings) ...[
+              ConfidenceMeter(value: value, status: status),
+              const LeafGap.lg(),
+            ],
+          ],
+        ),
+      );
+      // Let the bars finish filling.
+      await tester.pump(LeafMotion.slow);
+
+      await expectLater(
+        find.byKey(const Key('sheet')),
+        matchesGoldenFile('goldens/confidence_meter_${brightness.name}.png'),
+      );
+    });
+
+    testWidgets('ScanButton idle, busy and disabled, ${brightness.name}', (
+      tester,
+    ) async {
+      await pumpSheet(
+        tester,
+        brightness,
+        Column(
+          children: [
+            ScanButton(onPressed: () {}),
+            const LeafGap.xxl(),
+            ScanButton(onPressed: () {}, isBusy: true),
+            const LeafGap.xxl(),
+            const ScanButton(onPressed: null),
+          ],
+        ),
+      );
+
+      await expectLater(
+        find.byKey(const Key('sheet')),
+        matchesGoldenFile('goldens/scan_button_${brightness.name}.png'),
+      );
+    });
   }
 }
