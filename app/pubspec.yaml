@@ -34,8 +34,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  phosphor_flutter: ^2.1.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -56,6 +54,7 @@ flutter:
 
   assets:
     - assets/fonts/OFL.txt
+    - assets/fonts/Phosphor-LICENSE.txt
 
   fonts:
     - family: Inter
@@ -68,3 +67,9 @@ flutter:
           weight: 600
         - asset: assets/fonts/Inter-Bold.ttf
           weight: 700
+    # Phosphor Icons (MIT), regular weight, bundled directly: the
+    # phosphor_flutter package is unmaintained and doesn't compile on
+    # Flutter 3.47. Icons are defined in lib/design_system/icons/leaf_icons.dart.
+    - family: Phosphor
+      fonts:
+        - asset: assets/fonts/Phosphor-Regular.ttf

@@ -1,0 +1,4 @@
+# Golden (screenshot) tests render slightly differently per OS, so they're
+# generated and checked on macOS and skipped in Linux CI. See app/CLAUDE.md §4.
+tags:
+  golden:

@@ -37,6 +37,13 @@ void main() {
           c.onAccentContainer,
           c.accentContainer,
         ),
+        'danger on background': (c.danger, c.background),
+        'danger on surface': (c.danger, c.surface),
+        'onDanger on danger': (c.onDanger, c.danger),
+        'onDangerContainer on dangerContainer': (
+          c.onDangerContainer,
+          c.dangerContainer,
+        ),
         for (final status in LeafStatus.values) ...{
           '${status.name}.fg on bg': (
             c.forStatus(status).fg,

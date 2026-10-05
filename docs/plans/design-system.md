@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Steps 1–4 are done.
+**Status:** approved 2026-10-01. Steps 1–5 are done.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [app/CLAUDE.md §1](../../app/CLAUDE.md)
 **Paths:** relative to `app/`
@@ -300,3 +300,14 @@ Each step ends with `flutter analyze` and `flutter test` passing.
 3. **Icons:** Phosphor (`phosphor_flutter` ^2.1.0).
 4. **Dark mode:** included in v1, with the tokens in §3.1.
 5. **Golden tests:** only for the five key components: `LeafButton`, `LeafCard`, `StatusBadge`, `ConfidenceMeter` and `ScanButton`.
+
+### Changes during step 5 (2026-10-04)
+
+- **Icons, amending decision 3.** `phosphor_flutter` 2.1.0 (last released May 2024) extends `IconData`, which is a `final` class in Flutter 3.47, so it doesn't compile. With the user's agreement, Phosphor's MIT-licensed regular font is bundled directly (`assets/fonts/Phosphor-Regular.ttf`). The icons are `const IconData` values in `LeafIcons`, and the package is removed. Duotone can be added the same way later if needed.
+- **`danger` colour roles.** The "danger" button variant and form errors need a red that isn't the reserved `diseased` status colour. `danger`, `onDanger`, `dangerContainer` and `onDangerContainer` share the brick hue but are a separate role. Their contrast is tested.
+- **`LeafPressable`.** An internal building block, not exported, giving every tappable component the same behaviour:
+  - Shrink to 0.97 on press, instant when motion is reduced.
+  - A 2 px focus ring, with Enter and Space activating the control.
+  - Button semantics, where an explicit label replaces the child's text.
+- **`LeafGap`** is a small render object rather than a `SizedBox`, so it takes space only along a `Row` or `Column`'s main axis.
+- **Golden tests** are tagged `golden`. They're generated on macOS and skipped in Linux CI, because text rendering differs between platforms.
