@@ -37,6 +37,12 @@ void main() {
           c.onAccentContainer,
           c.accentContainer,
         ),
+        // Toasts invert the page: text and action sit on textPrimary.
+        'toast text (background on textPrimary)': (c.background, c.textPrimary),
+        'toast action (primaryContainer on textPrimary)': (
+          c.primaryContainer,
+          c.textPrimary,
+        ),
         'danger on background': (c.danger, c.background),
         'danger on surface': (c.danger, c.surface),
         'onDanger on danger': (c.onDanger, c.danger),

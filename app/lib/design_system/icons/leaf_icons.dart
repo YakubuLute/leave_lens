@@ -26,6 +26,14 @@ abstract final class LeafIcons {
   /// Overflow menu.
   static const IconData more = IconData(0xe1fe, fontFamily: _family);
 
+  /// Leads to another screen, e.g. a list row. Mirrors in right-to-left
+  /// layouts.
+  static const IconData chevronRight = IconData(
+    0xe13a,
+    fontFamily: _family,
+    matchTextDirection: true,
+  );
+
   // Scanning.
   /// Take a photo.
   static const IconData camera = IconData(0xe10e, fontFamily: _family);
@@ -48,6 +56,16 @@ abstract final class LeafIcons {
 
   /// The photo isn't a leaf.
   static const IconData notALeaf = IconData(0xebae, fontFamily: _family);
+
+  /// A caution notice. Same glyph as [diseased], kept as its own name so the
+  /// two meanings can diverge.
+  static const IconData warning = IconData(0xe4e0, fontFamily: _family);
+
+  /// Something went wrong.
+  static const IconData error = IconData(0xe4e2, fontFamily: _family);
+
+  /// No internet connection.
+  static const IconData offline = IconData(0xe4f2, fontFamily: _family);
 
   // Actions.
   /// Delete something.

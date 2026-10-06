@@ -38,7 +38,9 @@ lib/design_system/
     leaf_scaffold.dart, leaf_app_bar.dart, leaf_gap.dart,
     leaf_button.dart, leaf_icon_button.dart, leaf_card.dart,
     status_badge.dart, confidence_meter.dart, scan_button.dart,
-    leaf_image_frame.dart, …
+    leaf_image_frame.dart, leaf_tabs.dart, leaf_list_tile.dart,
+    leaf_notice.dart, leaf_sheet.dart, leaf_state_view.dart,
+    leaf_toast.dart, …
   design_system.dart        # barrel export — the only import features use
 ```
 

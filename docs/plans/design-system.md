@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Steps 1–6 are done.
+**Status:** approved 2026-10-01. Steps 1–7 are done.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [app/CLAUDE.md §1](../../app/CLAUDE.md)
 **Paths:** relative to `app/`
@@ -328,4 +328,20 @@ Each step ends with `flutter analyze` and `flutter test` passing.
   - Shows a leaf placeholder when there's no image, and an info placeholder if the image fails to load.
   - Decorative unless it's given a `semanticLabel`.
 - **Goldens** now cover all five key components from decision 5.
+
+### Decisions during step 7 (2026-10-05)
+
+- **`LeafNotice` tones:**
+  - `info` uses `primaryContainer`, `warning` uses `accentContainer`, `offline` uses `surfaceSunken` with `textSecondary`, and `error` uses `dangerContainer`. None of them use the reserved status roles.
+  - The low-confidence notice on the result screen uses `info`, which keeps the accent away from results (§11).
+  - An action is an underlined link in the notice's own colour, a 48 dp target. Notices are announced as live regions.
+- **`LeafTabs`:**
+  - A segmented control in a sunken track that scrolls sideways when it doesn't fit, so labels aren't squeezed at 200% text.
+  - Each segment is a 48 dp target. The selected and mutually exclusive state goes on the same semantics node as the label, through a new `LeafPressable.isSelected`. Tests caught that an outer `Semantics` wrapper had attached those flags to the wrong node.
+- **`LeafStateView`:** `.loading`, `.empty` and `.error`. The error variant **requires** `onRetry`, so the rule that every error offers recovery (app/CLAUDE.md §3) is enforced by the type system. Loading and error states are live regions.
+- **`LeafListTile`:** at least 56 dp tall, and pressable only when `onTap` is set.
+- **`showLeafSheet` and `LeafSheet`:** a themed modal sheet. The title is marked as a header for screen readers, and the sheet completes with the value it's closed with, or `null` when dismissed.
+- **`showLeafToast`:** a themed floating snack bar for short confirmations. It replaces any toast already showing, and the label and action must be given together.
+- **New icons:** `warning`, `error`, `offline` and `chevronRight`.
+- **Contrast tests** now also cover the toast's inverted text and its action label.
 
