@@ -1,8 +1,9 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Step 1 is done.
+**Status:** approved 2026-10-01. Steps 1–6 are done.
 **Roadmap phase:** 0 (Setup)
-**Rules:** [CLAUDE.md §2](../../CLAUDE.md)
+**Rules:** [app/CLAUDE.md §1](../../app/CLAUDE.md)
+**Paths:** relative to `app/`
 
 ## 1. Goal
 
@@ -40,7 +41,7 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 | `surface` | `#FFFBF3` | Cards, sheets | n/a |
 | `surfaceSunken` | `#EFE6D4` | Input fills, insets | n/a |
 | `border` | `#DCCFB4` | Decorative hairlines | n/a |
-| `borderStrong` | `#9C8862`* | Control outlines (inputs, chips) | target ≥ 3:1 |
+| `borderStrong` | `#8F7B57` | Control outlines (inputs, chips): `background` / `surface` / `surfaceSunken` | **3.6 / 4.0 / 3.3** (UI boundary AA is 3:1) |
 | `textPrimary` | `#3A2E1F` | `background` | **11.7** |
 | `textSecondary` | `#6B5B45` | `background` | **5.8** |
 | `textMuted` | `#786852` | `background` | **4.8** |
@@ -53,8 +54,6 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 | `accentContainer` | `#F6E0D2` | n/a | n/a |
 | `onAccentContainer` | `#6E3412` | `accentContainer` | **7.6** |
 
-\* The exact `borderStrong` value will be tuned and checked during implementation.
-
 **Status colours.** These are reserved for diagnosis results only. Each status has three tokens:
 - `fg`: text and icon colour on the status's tinted background.
 - `bg`: the tinted background itself.
@@ -64,7 +63,7 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 |---|---|---|---|---|---|---|
 | `healthy` (jade, distinct from the olive brand colour) | `#1D5A3F` | `#DDEFE4` | **6.8** | `#2A7454` | **5.0** | `#FFFBF3`: **5.5** |
 | `diseased` (brick red) | `#7A1F1A` | `#F6D9D5` | **7.8** | `#A1302A` | **6.3** | `#FFFBF3`: **6.9** |
-| `uncertain` (ochre) | `#6B4A0C` | `#F5E7C8` | **6.6** | `#8A5D0E` | **5.1** | n/a |
+| `uncertain` (ochre) | `#6B4A0C` | `#F5E7C8` | **6.6** | `#8A5D0E` | **5.1** | `#FFFBF3`: **5.6** |
 | `notALeaf` | uses neutral tokens | n/a | n/a | n/a | n/a | n/a |
 
 **Dark mode.** Warm charcoal, not blue-black. Every pair is checked against its own background.
@@ -75,15 +74,23 @@ Every text pair below has been checked against WCAG 2.1. The ratio column shows 
 | `surface` | `#201C16` | n/a | n/a |
 | `surfaceSunken` | `#110E0B` | n/a | n/a |
 | `border` | `#3A3328` | n/a | n/a |
+| `borderStrong` | `#857760` | `background` / `surface` / `surfaceSunken` | **4.2 / 3.9 / 4.4** |
 | `textPrimary` | `#F1E9DA` | `background` | **15.4** |
 | `textSecondary` | `#C2B49C` | `background` | **9.1** |
 | `textMuted` | `#9A8C75` | `surface` | **5.2** |
 | `onPrimary` | `#1E2A10` | `primary` `#A9C47F` | **7.8** |
+| `primary` | `#A9C47F` | `background` | **9.6** |
 | `onPrimaryContainer` | `#DCE8C6` | `primaryContainer` `#34461F` | **8.0** |
 | `accent` | `#E39A6B` | `background` | **8.0** |
+| `onAccent` | `#2A1406` | `accent` | **7.6** |
+| `onAccentContainer` | `#F6D2BA` | `accentContainer` `#4A2A15` | **9.1** |
 | `healthy` `fg` | `#8AD3A9` | `bg` `#173A2A` | **7.2** |
 | `diseased` `fg` | `#F4A497` | `bg` `#4A1C17` | **7.2** |
 | `uncertain` `fg` | `#EBC67E` | `bg` `#3D2D0E` | **8.2** |
+| `healthy` / `diseased` / `uncertain` `solid` | `#5FB98A` / `#E8806E` / `#D9A84E` | `background` | **7.8 / 6.8 / 8.5** |
+| On-solid text (all statuses) | `#16130F` | each `solid` | **≥ 6.8** |
+
+The contrast pairs above are enforced by `test/design_system/tokens/leaf_colors_contrast_test.dart`.
 
 ### 3.2 Typography
 
@@ -154,6 +161,7 @@ lib/design_system/
   tokens/
     leaf_palette.dart          # raw hex values (private to the design system)
     leaf_colors.dart           # semantic colour set (light + dark), ThemeExtension
+    leaf_status.dart           # LeafStatus enum (healthy, diseased, uncertain, notALeaf)
     leaf_typography.dart       # text styles, ThemeExtension
     leaf_spacing.dart          # static consts
     leaf_radii.dart            # static consts
@@ -161,6 +169,8 @@ lib/design_system/
     leaf_motion.dart           # static consts
   theme/
     leaf_theme.dart            # LeafTheme.light() / LeafTheme.dark() → ThemeData
+    leaf_component_themes.dart # Material component overrides
+    leaf_page_transitions_builder.dart # fade + 8 px rise
     leaf_context.dart          # extension: context.leafColors, context.leafText
   icons/
     leaf_icons.dart            # semantic icon names → Phosphor
@@ -187,7 +197,7 @@ lib/design_system/
 | Cards, dialogs, bottom sheets | Flat, hairline border, our radii, `surface` colour. |
 | Snack bars | Floating, `textPrimary` background with `background` text, radius `md`. |
 | Progress, switches, checkboxes | Use `primary` and `borderStrong`. |
-| Page transitions | Fade combined with an 8 px upward slide, the same on iOS and Android. |
+| Page transitions | Fade combined with an 8 px upward slide on Android and other platforms. **iOS keeps the native Cupertino transition**, because replacing it removes the edge swipe-back gesture iOS users expect. Changed during step 3. |
 | Text selection | `primary` cursor, and `primaryContainer` for the selection highlight. |
 
 ## 5. Interaction and accessibility standards (every component)
@@ -272,7 +282,7 @@ Each step ends with `flutter analyze` and `flutter test` passing.
 6. Build the diagnosis components: `StatusBadge`, `ConfidenceMeter`, `ScanButton` and `LeafImageFrame`, with tests.
 7. Build the structure and feedback components: `LeafTabs`, `LeafListTile`, `LeafNotice`, `LeafSheet`, `LeafStateView` and `LeafToast`, with tests.
 8. Build the gallery and the sample result screen.
-9. Do a final review against CLAUDE.md §2 and §4, then commit.
+9. Do a final review against app/CLAUDE.md §1 and §3, then commit.
 
 ## 11. Risks
 
@@ -290,3 +300,32 @@ Each step ends with `flutter analyze` and `flutter test` passing.
 3. **Icons:** Phosphor (`phosphor_flutter` ^2.1.0).
 4. **Dark mode:** included in v1, with the tokens in §3.1.
 5. **Golden tests:** only for the five key components: `LeafButton`, `LeafCard`, `StatusBadge`, `ConfidenceMeter` and `ScanButton`.
+
+### Changes during step 5 (2026-10-04)
+
+- **Icons, amending decision 3.** `phosphor_flutter` 2.1.0 (last released May 2024) extends `IconData`, which is a `final` class in Flutter 3.47, so it doesn't compile. With the user's agreement, Phosphor's MIT-licensed regular font is bundled directly (`assets/fonts/Phosphor-Regular.ttf`). The icons are `const IconData` values in `LeafIcons`, and the package is removed. Duotone can be added the same way later if needed.
+- **`danger` colour roles.** The "danger" button variant and form errors need a red that isn't the reserved `diseased` status colour. `danger`, `onDanger`, `dangerContainer` and `onDangerContainer` share the brick hue but are a separate role. Their contrast is tested.
+- **`LeafPressable`.** An internal building block, not exported, giving every tappable component the same behaviour:
+  - Shrink to 0.97 on press, instant when motion is reduced.
+  - A 2 px focus ring, with Enter and Space activating the control.
+  - Button semantics, where an explicit label replaces the child's text.
+- **`LeafGap`** is a small render object rather than a `SizedBox`, so it takes space only along a `Row` or `Column`'s main axis.
+- **Golden tests** are tagged `golden`. They're generated on macOS and skipped in Linux CI, because text rendering differs between platforms.
+
+### Decisions during step 6 (2026-10-05)
+
+- **`StatusBadge` default labels:** "Healthy", "Diseased", "Not sure" and "Not a leaf", each with its own icon. A `label` parameter overrides them, for translations later. `md` is 36 dp tall and `sm` is 28 dp, for list rows.
+- **`ConfidenceMeter` bands:**
+  - 85% and up reads "High confidence", 60% and up reads "Medium confidence", and anything lower reads "Low confidence".
+  - These are **presentation only**. The hybrid model's fallback threshold `T` stays in config (PLAN §1).
+  - The fill uses the status `solid` colour, on a track in the `border` colour. The track was first `surfaceSunken`, but that was nearly invisible on the dark page. Contrast tests require every status fill to reach at least 3:1 against the track.
+- **`ScanButton`:**
+  - An 88 dp olive disc with a camera icon and the `floating` shadow.
+  - While busy, it shows a spinner and a pulsing ring, ignores taps and is announced as "Scanning". The pulse is static when motion is reduced.
+  - A press gives a light haptic tap (§5).
+- **`LeafImageFrame`:**
+  - `xl` corners with a hairline border, and a fade-in on load.
+  - Shows a leaf placeholder when there's no image, and an info placeholder if the image fails to load.
+  - Decorative unless it's given a `semanticLabel`.
+- **Goldens** now cover all five key components from decision 5.
+

@@ -1,0 +1,30 @@
+{
+  "status": "diseased",
+  "crop": "Tomato",
+  "disease": "Late blight",
+  "pathogen": "Phytophthora infestans",
+  "confidence": 0.93,
+  "severity": "moderate",
+  "source": "on_device",
+  "symptoms": [
+    "Dark, water-soaked lesions on leaves",
+    "White mould on the leaf underside in humid weather"
+  ],
+  "treatment": {
+    "immediate": [
+      "Remove and destroy infected leaves; do not compost them"
+    ],
+    "organic": [
+      "Apply a copper-based fungicide, following label directions"
+    ],
+    "chemical": [
+      "Use a fungicide containing chlorothalonil or mancozeb, following label directions"
+    ],
+    "prevention": [
+      "Water at the base of the plant, not the leaves",
+      "Space plants for airflow",
+      "Rotate crops each season"
+    ]
+  },
+  "disclaimer": "Guidance only — confirm with a local agricultural extension officer before applying any chemical treatment."
+}

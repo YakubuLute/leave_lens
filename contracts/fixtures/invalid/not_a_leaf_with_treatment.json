@@ -1,0 +1,20 @@
+{
+  "status": "not_a_leaf",
+  "crop": null,
+  "disease": null,
+  "pathogen": null,
+  "confidence": 0.99,
+  "severity": null,
+  "source": "cloud",
+  "symptoms": [],
+  "treatment": {
+    "immediate": [],
+    "organic": [],
+    "chemical": [],
+    "prevention": [
+      "Keep checking leaves weekly",
+      "Remove weeds that can host pests"
+    ]
+  },
+  "disclaimer": "Guidance only — confirm with a local agricultural extension officer before applying any chemical treatment."
+}

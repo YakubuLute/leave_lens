@@ -1,0 +1,20 @@
+{
+  "status": "healthy",
+  "crop": "Maize",
+  "disease": "Rust",
+  "pathogen": null,
+  "confidence": 0.97,
+  "severity": null,
+  "source": "on_device",
+  "symptoms": [],
+  "treatment": {
+    "immediate": [],
+    "organic": [],
+    "chemical": [],
+    "prevention": [
+      "Keep checking leaves weekly",
+      "Remove weeds that can host pests"
+    ]
+  },
+  "disclaimer": "Guidance only — confirm with a local agricultural extension officer before applying any chemical treatment."
+}
