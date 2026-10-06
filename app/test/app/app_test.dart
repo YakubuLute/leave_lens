@@ -4,15 +4,22 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:leaf_lens/app/app.dart';
 import 'package:leaf_lens/design_system/design_system.dart';
+import 'package:leaf_lens/design_system/gallery/design_system_gallery.dart';
 
 void main() {
   BuildContext homeContext(WidgetTester tester) =>
       tester.element(find.text('Leaf Lens'));
 
-  testWidgets('starts on the placeholder home with the app name', (
+  testWidgets('opens the design-system gallery in debug builds', (
     tester,
   ) async {
     await tester.pumpWidget(const LeafLensApp());
+
+    expect(find.byType(DesignSystemGallery), findsOneWidget);
+  });
+
+  testWidgets('placeholder home shows the app name', (tester) async {
+    await tester.pumpWidget(const LeafLensApp(showGallery: false));
 
     expect(find.text('Leaf Lens'), findsOneWidget);
     expect(find.text('Snap a leaf. Know its health.'), findsOneWidget);
@@ -25,7 +32,7 @@ void main() {
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
     addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
 
-    await tester.pumpWidget(const LeafLensApp());
+    await tester.pumpWidget(const LeafLensApp(showGallery: false));
 
     expect(homeContext(tester).leafColors, LeafColors.light);
   });
@@ -34,7 +41,7 @@ void main() {
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
     addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
 
-    await tester.pumpWidget(const LeafLensApp());
+    await tester.pumpWidget(const LeafLensApp(showGallery: false));
     await tester.pumpAndSettle();
 
     expect(homeContext(tester).leafColors, LeafColors.dark);

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:leaf_lens/design_system/design_system.dart';
+import 'package:leaf_lens/design_system/gallery/sample_result_screen.dart';
 
 /// Visual regression for the key components (plan decision 5).
 ///
@@ -202,6 +203,28 @@ void main() {
       await expectLater(
         find.byKey(const Key('sheet')),
         matchesGoldenFile('goldens/scan_button_${brightness.name}.png'),
+      );
+    });
+
+    testWidgets('Sample result screen, ${brightness.name}', (tester) async {
+      tester.view.physicalSize = const Size(400, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: brightness == Brightness.light
+              ? LeafTheme.light()
+              : LeafTheme.dark(),
+          home: const SampleResultScreen(),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await expectLater(
+        find.byType(SampleResultScreen),
+        matchesGoldenFile('goldens/sample_result_${brightness.name}.png'),
       );
     });
   }

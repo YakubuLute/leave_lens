@@ -25,6 +25,7 @@ lib/design_system/
     leaf_radii.dart         # corner radii
     leaf_shadows.dart       # elevation (mostly none; borders preferred)
     leaf_motion.dart        # durations, curves, reduced-motion helper
+    leaf_status_colors.dart # fg/bg/solid/onSolid set for one status
   theme/
     leaf_theme.dart         # builds ThemeData (light/dark) from tokens
     leaf_component_themes.dart # Material component overrides
@@ -41,6 +42,8 @@ lib/design_system/
     leaf_image_frame.dart, leaf_tabs.dart, leaf_list_tile.dart,
     leaf_notice.dart, leaf_sheet.dart, leaf_state_view.dart,
     leaf_toast.dart, …
+  gallery/                  # debug-only DesignSystemGallery + sample result
+                            # screen; not exported, compiled out of release
   design_system.dart        # barrel export — the only import features use
 ```
 
@@ -61,7 +64,7 @@ lib/design_system/
 5. **Readable outdoors.** People use the app in sunlight, so keep text contrast at WCAG AA or better and avoid tiny or light-grey text.
 6. **The theme is the single source of truth.** `leaf_theme.dart` overrides Material defaults: no ripple splash, no surface tint, flat elevation with borders, custom fonts and shapes. That way, any Material widgets a package shows still match the app.
 7. **Change tokens, not call sites.** To change the look, update the tokens or the theme. Don't patch individual screens.
-8. **Showcase.** Keep a debug-only `DesignSystemGallery` screen that renders every component in each of its variants. Update it whenever you add or change a component.
+8. **Showcase.** Keep the debug-only `DesignSystemGallery` (`lib/design_system/gallery/`) rendering every component in each of its variants. Update it whenever you add or change a component. Debug builds open it as the home screen until Phase 1 adds the `/_gallery` route.
 
 ---
 
@@ -90,7 +93,7 @@ lib/
   - Widgets never call TFLite or HTTP directly. They go through a provider that depends on a `domain` interface, for example `DiagnosisService`.
 - **Depend on abstractions.** Every service has an abstract interface in `domain/` and gets injected with Riverpod. This lets us swap the stub, TFLite, cloud and hybrid implementations, and makes testing easy.
 - **One responsibility per unit.**
-  - A file holds one public class or widget.
+  - A file holds one public class or widget. Small companions that only exist for that widget may share its file, such as its variant `enum` or a tiny data class like `LeafTab`.
   - Keep a widget's `build` method short: extract sub-widgets as classes, not helper methods that return widgets.
   - Keep files under about 300 lines, and split them when they grow.
 - **No logic in widgets.** Widgets render state and forward events. Business rules belong in the `application` or `domain` layer, for example the confidence threshold or the fallback decision.
