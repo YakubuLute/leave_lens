@@ -32,4 +32,5 @@ export 'package:leaf_lens/design_system/tokens/leaf_radii.dart';
 export 'package:leaf_lens/design_system/tokens/leaf_shadows.dart';
 export 'package:leaf_lens/design_system/tokens/leaf_spacing.dart';
 export 'package:leaf_lens/design_system/tokens/leaf_status.dart';
+export 'package:leaf_lens/design_system/tokens/leaf_status_colors.dart';
 export 'package:leaf_lens/design_system/tokens/leaf_typography.dart';
