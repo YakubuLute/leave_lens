@@ -1,6 +1,6 @@
 # Plan: Leaf Lens design system
 
-**Status:** approved 2026-10-01. Steps 1–7 are done.
+**Status:** done. All eight steps were completed by 2026-10-06.
 **Roadmap phase:** 0 (Setup)
 **Rules:** [app/CLAUDE.md §1](../../app/CLAUDE.md)
 **Paths:** relative to `app/`
@@ -344,4 +344,24 @@ Each step ends with `flutter analyze` and `flutter test` passing.
 - **`showLeafToast`:** a themed floating snack bar for short confirmations. It replaces any toast already showing, and the label and action must be given together.
 - **New icons:** `warning`, `error`, `offline` and `chevronRight`.
 - **Contrast tests** now also cover the toast's inverted text and its action label.
+
+### Decisions during step 8 (2026-10-06)
+
+- **No route yet.** `go_router` arrives in Phase 1, so debug builds open the `DesignSystemGallery` as the home screen, and release builds keep the placeholder home, now on `LeafScaffold`. The check `kDebugMode && showGallery` folds to a constant, so release builds compile the gallery out. Phase 1 moves the gallery to a debug-only `/_gallery` route, as §7 intended.
+- **Gallery layout:**
+  - It lives in `lib/design_system/gallery/`, isn't exported from the barrel, and uses only the public `design_system.dart` API, like a feature would.
+  - It has one section per group: foundations, actions, diagnosis, surfaces and feedback.
+  - The light/dark and 100/150/200% text switches go through `GalleryFrame`, which also wraps pages opened from the gallery.
+- **Sample result screen.** Its data mirrors `contracts/fixtures/valid/diseased.json`. Goldens in both modes act as an end-to-end visual check.
+- **Smoke tests** scroll through the whole gallery in light, dark and 200% text, and fail on any rendering error. Together they exercise every component.
+- **Final review against app/CLAUDE.md:**
+  - No raw colours, numbers or Material widgets outside the design system's internals.
+  - Status colours are read only by `StatusBadge` and `ConfidenceMeter`, plus the gallery's swatches.
+  - Every public API is documented, except the internal palette constants, which have group comments.
+  - `LeafStatusColors` moved to its own file, per the one-public-class rule.
+  - Two files are slightly over 300 lines because of framework boilerplate: `leaf_colors.dart` at 312 (`copyWith` and `lerp` for 25 roles) and `leaf_component_themes.dart` at 315 (flat builder functions). Both were kept whole.
+
+### Open issue for Phase 1
+
+- **The four treatment tabs don't fit** at 100% text on 360–412 dp phones. "Prevention" is cut off, and the bar scrolls by design. The real result screen should decide whether to use shorter labels ("Now", "Organic", "Chemical", "Prevent"), fewer tabs, or a stacked layout.
 

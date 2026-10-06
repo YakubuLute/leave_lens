@@ -2,7 +2,7 @@
 
 Leaf Lens is a mobile app that checks plant leaves for disease. You take or upload a photo of a leaf, and the app tells you whether it's **healthy** or **unhealthy**. If it's unhealthy, the app names the **disease** and explains **how to treat it**.
 
-> **Status: planning.** The Flutter project has been created, but no features are built yet. The full architecture and roadmap are in [docs/PLAN.md](docs/PLAN.md).
+> **Status: design system complete.** The app's design system (tokens, theme, components and a debug gallery) and the backend skeleton are built. Phase 1, the scan flow, is next. The architecture and roadmap are in [docs/PLAN.md](docs/PLAN.md).
 
 ---
 
